@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { useSuperHeroesData } from "../hooks/useSuperHeroesData";
 
 const RQSuperHeroesPage = () => {
@@ -19,8 +19,6 @@ const RQSuperHeroesPage = () => {
     refetch,
   } = useSuperHeroesData(onSuccess, onError);
 
-  console.log("superHeroesData", superHeroesData);
-
   if (isLoading || isFetching) {
     return <h2>Loading Skeleton...</h2>;
   }
@@ -31,6 +29,7 @@ const RQSuperHeroesPage = () => {
 
   return (
     <>
+      <Outlet />
       <h2>RQSuperHeroesPage</h2>
       <button onClick={refetch}>Fetch Heroes</button>
       {superHeroesData?.data.map((hero) => (
