@@ -1,31 +1,34 @@
-import React from "react";
-import { useQuery } from "react-query";
-import useAxios from "../hooks/useAxios";
+import { useSuperHeroesData } from "../hooks/useSuperHeroesData";
 
 const RQSuperHeroesPage = () => {
-  const { instance } = useAxios();
-  const fetchSuperHeroes = () => {
-    return instance.get("/superheroes");
+  const onSuccess = (data) => {
+    console.log("Perform side effect after data fetching", data);
   };
 
-  const {
-    isLoading,
-    data: superHeroesData,
-    isError,
-    error,
-  } = useQuery(["super-heroes"], fetchSuperHeroes);
+  const onError = (error) => {
+    console.log("Perform side effect after encountering error", error);
+  };
+
+  const { isLoading, data, isError, error, isFetching, refetch } =
+    useSuperHeroesData(onSuccess, onError);
+
+  if (isLoading || isFetching) {
+    return <h2>Loading Skeleton...</h2>;
+  }
 
   if (isError) {
     return <h2>{error.message}</h2>;
   }
 
-  return isLoading ? (
-    <h2>Loading...</h2>
-  ) : (
+  return (
     <>
       <h2>RQSuperHeroesPage</h2>
-      {superHeroesData?.data.map((hero) => (
+      <button onClick={refetch}>Fetch Heroes</button>
+      {/* {superHeroesData?.data.map((hero) => (
         <div key={hero.id}>{hero.name}</div>
+      ))} */}
+      {data.map((heroName) => (
+        <div key={heroName}>{heroName}</div>
       ))}
     </>
   );
