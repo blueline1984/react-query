@@ -12,7 +12,9 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/super-heroes" element={<SuperHeroesPage />} />
-        <Route path="/rq-super-heroes" element={<RQSuperHeroesPage />} />
+        <Route path="/rq-super-heroes" element={<RQSuperHeroesPage />}>
+          <Route path=":heroId"></Route>
+        </Route>
       </Routes>
     </>
   );
