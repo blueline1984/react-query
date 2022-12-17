@@ -11,8 +11,6 @@ const RQSuperHero = () => {
     isError,
   } = useSuperHeroData(heroId);
 
-  console.log("superHeroData", superHeroData);
-
   if (isLoading) {
     return <h2>Loading...</h2>;
   }
